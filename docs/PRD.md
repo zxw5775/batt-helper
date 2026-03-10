@@ -6,7 +6,7 @@
 - 产品形态：macOS 桌面应用 + 状态栏应用
 - 技术架构：Electron
 - 核心引擎：基于 `batt`
-- App 作者：`zxw | gpt5.4`
+- App 作者：`zxw5775 | gpt5.4`
 - Core powered by：`batt`
 - batt 作者：`charlie0129`
 - batt 仓库：[https://github.com/charlie0129/batt](https://github.com/charlie0129/batt)
