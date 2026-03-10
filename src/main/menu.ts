@@ -2,7 +2,7 @@ import { Menu, type MenuItemConstructorOptions, app, shell } from 'electron'
 import { refreshTray } from './tray'
 import { tMain } from './services/i18n'
 import { getSettings } from './store/settings'
-import { showMainWindow } from './window'
+import { hideMainWindow, showMainWindow } from './window'
 
 function buildApplicationMenu(): Menu {
   const locale = getSettings().locale
@@ -59,7 +59,7 @@ function buildApplicationMenu(): Menu {
       submenu: [
         { label: tMain('menu.openMainWindow', {}, locale), click: () => showMainWindow() },
         { label: tMain('menu.minimize', {}, locale), role: 'minimize' },
-        { label: tMain('menu.close', {}, locale), role: 'close' },
+        { label: tMain('menu.close', {}, locale), click: () => hideMainWindow() },
         ...(process.platform === 'darwin'
           ? [{ type: 'separator' as const }, { label: tMain('menu.bringAllToFront', {}, locale), role: 'front' as const }]
           : []),
@@ -69,7 +69,7 @@ function buildApplicationMenu(): Menu {
       label: tMain('menu.help', {}, locale),
       submenu: [
         { label: tMain('menu.refreshStatus', {}, locale), click: () => void refreshTray() },
-        { label: tMain('menu.releasePage', {}, locale), click: () => void shell.openExternal('https://github.com/charlie0129/batt/releases') },
+        { label: tMain('menu.releasePage', {}, locale), click: () => void shell.openExternal('https://github.com/zxw5775/batt-helper/releases') },
       ],
     },
   )

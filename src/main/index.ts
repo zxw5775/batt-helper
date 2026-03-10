@@ -1,12 +1,13 @@
 import { app } from 'electron'
 import { join } from 'node:path'
-import { createMainWindow, markAppQuitting } from './window'
+import { createMainWindow, markAppQuitting, showMainWindow } from './window'
 import { createTray, destroyTray } from './tray'
 import { refreshNativeMenus, configureAboutPanel } from './menu'
 import { registerBattIpc } from './ipc/batt'
 import { registerSettingsIpc } from './ipc/settings'
 import { registerAppIpc } from './ipc/app'
 import { log } from './services/logger'
+import { getSettings } from './store/settings'
 
 function applyAppIcon() {
   if (process.platform !== 'darwin') {
@@ -31,12 +32,16 @@ function bootstrap() {
 }
 
 app.whenReady().then(() => {
+  if (process.platform === 'darwin' && getSettings().startInTray) {
+    app.dock?.hide()
+  }
+
   applyAppIcon()
   bootstrap()
   log('app', 'ready')
 
   app.on('activate', () => {
-    createMainWindow()
+    showMainWindow()
   })
 })
 

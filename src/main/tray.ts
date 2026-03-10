@@ -5,7 +5,7 @@ import { battBridgeService } from './services/batt-bridge'
 import { tBatteryStateMain, tMain } from './services/i18n'
 import { getSettings } from './store/settings'
 import { log } from './services/logger'
-import { getMainWindow, showMainWindow } from './window'
+import { showMainWindow } from './window'
 
 let tray: Tray | null = null
 let pollTimer: NodeJS.Timeout | null = null
@@ -75,7 +75,7 @@ export async function refreshTray() {
       { label: tMain('tray.set80', {}, locale), click: async () => battBridgeService.setLimit(80) },
       { label: tMain('tray.disableLimit', {}, locale), click: async () => battBridgeService.disableLimit() },
       { type: 'separator' },
-      { label: tMain('tray.quit', { appName }, locale), role: 'quit' },
+      { label: tMain('tray.quit', { appName }, locale), click: () => app.quit() },
     ])
     tray.setContextMenu(menu)
   } catch {
@@ -85,7 +85,7 @@ export async function refreshTray() {
         { label: tMain('tray.notConnected', {}, locale), enabled: false },
         { type: 'separator' },
         { label: tMain('tray.open', { appName }, locale), click: () => showMainWindow() },
-        { label: tMain('tray.quit', { appName }, locale), role: 'quit' },
+        { label: tMain('tray.quit', { appName }, locale), click: () => app.quit() },
       ]),
     )
   }
@@ -99,12 +99,7 @@ export function createTray() {
   tray = new Tray(createTrayImage(trayLogoFile))
   tray.setIgnoreDoubleClickEvents(true)
   tray.on('click', () => {
-    const window = getMainWindow()
-    if (window?.isVisible()) {
-      window.hide()
-      return
-    }
-    showMainWindow()
+    tray?.popUpContextMenu()
   })
 
   void refreshTray()

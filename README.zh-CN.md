@@ -2,7 +2,26 @@
 
 电池小助手是一个构建在 `batt` 之上的 macOS 桌面电池管理工具，采用 Electron、React 和 TypeScript 实现。该项目使用 **OpenAI Codex（ChatGPT 5.4）** 开发，并进一步整理为可分发、可安装、适合日常使用的桌面应用。
 
-> English documentation: see `README.md`
+> English documentation: see [README.md](README.md)
+
+## 索引
+
+- [项目介绍](#项目介绍)
+- [界面截图](#界面截图)
+- [Codex / ChatGPT 5.4 开发说明](#codex--chatgpt-54-开发说明)
+- [核心功能](#核心功能)
+- [运行要求](#运行要求)
+- [安装方式](#安装方式)
+- [首次启动流程](#首次启动流程)
+- [开发与构建](#开发与构建)
+- [项目结构](#项目结构)
+- [架构说明](#架构说明)
+- [batt 接入机制](#batt-接入机制)
+- [多语言说明](#多语言说明)
+- [版本产物](#版本产物)
+- [文档索引](#文档索引)
+- [License](#license)
+- [致谢](#致谢)
 
 ## 项目介绍
 
@@ -16,6 +35,20 @@
 - 完整中英文双语支持
 
 本项目**没有把 batt 核心源码嵌入应用**，而是与系统中的外部 `batt` 二进制和 daemon 集成，通过检测、调用、修复和更新机制完成能力接入。
+
+## 界面截图
+
+### 深色仪表板
+
+![电池小助手仪表板](<public/深色仪表板.png>)
+
+### 深色充电界面
+
+![电池小助手充电界面](<public/深色充电界面.png>)
+
+### 浅色设置页
+
+![电池小助手设置页](<public/浅色设置.png>)
 
 ## Codex / ChatGPT 5.4 开发说明
 
@@ -116,7 +149,7 @@ resources/
   brand/       应用运行时品牌资源
 build/         应用图标打包资源
 docs/          PRD 与技术设计文档
-dist/          打包输出目录
+public/        README 截图与静态说明资源
 ```
 
 ## 架构说明
@@ -147,8 +180,8 @@ dist/          打包输出目录
 
 语言资源位于：
 
-- `src/renderer/locales/en-US.json`
-- `src/renderer/locales/zh-CN.json`
+- [`src/renderer/locales/en-US.json`](src/renderer/locales/en-US.json)
+- [`src/renderer/locales/zh-CN.json`](src/renderer/locales/zh-CN.json)
 
 ## 版本产物
 
@@ -159,18 +192,23 @@ dist/          打包输出目录
 
 版本说明记录在：
 
-- `CHANGELOG.md`
+- [`CHANGELOG.md`](CHANGELOG.md)
 
-## 补充文档
+## 文档索引
 
-更多产品与技术文档见：
+项目相关文档与文件入口：
 
-- `docs/PRD.md`
-- `docs/TECHNICAL_DESIGN.md`
+- [English README](README.md)
+- [产品需求文档](docs/PRD.md)
+- [技术设计文档](docs/TECHNICAL_DESIGN.md)
+- [变更记录](CHANGELOG.md)
+- [许可证](LICENSE)
+- [包清单](package.json)
+- [Electron Builder 配置](electron-builder.yml)
 
 ## License
 
-本项目采用 MIT License，详见 `LICENSE`。
+本项目采用 MIT License，详见 [LICENSE](LICENSE)。
 
 ## 致谢
 

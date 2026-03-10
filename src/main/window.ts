@@ -1,4 +1,4 @@
-import { BrowserWindow, shell } from 'electron'
+import { app, BrowserWindow, shell } from 'electron'
 import { join } from 'node:path'
 import { getSettings } from './store/settings'
 
@@ -9,6 +9,23 @@ function shouldOpenExternally(url: string) {
   return /^https?:\/\//i.test(url)
 }
 
+function syncWindowPresence(isVisible: boolean) {
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.setSkipTaskbar(!isVisible)
+  }
+
+  if (process.platform !== 'darwin') {
+    return
+  }
+
+  if (isVisible) {
+    void app.dock?.show()
+    return
+  }
+
+  app.dock?.hide()
+}
+
 export function getMainWindow() {
   return mainWindow
 }
@@ -17,16 +34,25 @@ export function markAppQuitting() {
   isQuitting = true
 }
 
-export function showMainWindow() {
+export function hideMainWindow() {
   if (!mainWindow) {
     return
   }
 
-  if (mainWindow.isMinimized()) {
-    mainWindow.restore()
+  mainWindow.hide()
+  syncWindowPresence(false)
+}
+
+export function showMainWindow() {
+  const window = mainWindow ?? createMainWindow()
+
+  if (window.isMinimized()) {
+    window.restore()
   }
-  mainWindow.show()
-  mainWindow.focus()
+
+  syncWindowPresence(true)
+  window.show()
+  window.focus()
 }
 
 export function createMainWindow() {
@@ -53,9 +79,20 @@ export function createMainWindow() {
 
   mainWindow.once('ready-to-show', () => {
     const settings = getSettings()
-    if (!settings.startInTray) {
-      mainWindow?.show()
+    if (settings.startInTray) {
+      syncWindowPresence(false)
+      return
     }
+
+    showMainWindow()
+  })
+
+  mainWindow.on('show', () => {
+    syncWindowPresence(true)
+  })
+
+  mainWindow.on('hide', () => {
+    syncWindowPresence(false)
   })
 
   mainWindow.webContents.setWindowOpenHandler(({ url }) => {
@@ -78,11 +115,12 @@ export function createMainWindow() {
     const settings = getSettings()
     if (!isQuitting && settings.minimizeToTray) {
       event.preventDefault()
-      mainWindow?.hide()
+      hideMainWindow()
     }
   })
 
   mainWindow.on('closed', () => {
+    syncWindowPresence(false)
     mainWindow = null
   })
 

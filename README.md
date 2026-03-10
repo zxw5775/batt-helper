@@ -2,7 +2,26 @@
 
 Batt Helper is a modern macOS battery management desktop app built on top of `batt`, implemented with Electron, React, and TypeScript. This project was developed with OpenAI Codex powered by ChatGPT 5.4, then refined into a distributable desktop product for daily Apple Silicon Mac usage.
 
-> Chinese documentation: see `README.zh-CN.md`
+> Chinese documentation: see [README.zh-CN.md](README.zh-CN.md)
+
+## Index
+
+- [Overview](#overview)
+- [Screenshots](#screenshots)
+- [Built With Codex / ChatGPT 5.4](#built-with-codex--chatgpt-54)
+- [Key Features](#key-features)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [First Launch Flow](#first-launch-flow)
+- [Development Workflow](#development-workflow)
+- [Project Structure](#project-structure)
+- [Architecture Notes](#architecture-notes)
+- [batt Integration Model](#batt-integration-model)
+- [Localization](#localization)
+- [Release Files](#release-files)
+- [Documentation Index](#documentation-index)
+- [License](#license)
+- [Credits](#credits)
 
 ## Overview
 
@@ -16,6 +35,20 @@ Batt Helper wraps the `batt` CLI and daemon with a desktop UI focused on:
 - bilingual interface support (English / Simplified Chinese)
 
 This project does **not** embed the batt core source code. Instead, it integrates with the external `batt` binary and daemon, detects their availability and version, and helps the user install, repair, or update them through the app.
+
+## Screenshots
+
+### Dashboard (Dark)
+
+![Batt Helper Dashboard](<public/深色仪表板.png>)
+
+### Charging (Dark)
+
+![Batt Helper Charging](<public/深色充电界面.png>)
+
+### Settings (Light)
+
+![Batt Helper Settings](<public/浅色设置.png>)
 
 ## Built With Codex / ChatGPT 5.4
 
@@ -116,6 +149,7 @@ resources/
   brand/       Runtime brand assets used by the packaged app
 build/         Packaged app icon resources
 docs/          PRD and technical design references
+public/        README screenshots and static documentation assets
 ```
 
 ## Architecture Notes
@@ -146,8 +180,8 @@ Supported languages:
 
 Default localized resources live in:
 
-- `src/renderer/locales/en-US.json`
-- `src/renderer/locales/zh-CN.json`
+- [`src/renderer/locales/en-US.json`](src/renderer/locales/en-US.json)
+- [`src/renderer/locales/zh-CN.json`](src/renderer/locales/zh-CN.json)
 
 ## Release Files
 
@@ -158,18 +192,23 @@ Current packaged outputs:
 
 Current release notes are tracked in:
 
-- `CHANGELOG.md`
+- [`CHANGELOG.md`](CHANGELOG.md)
 
-## Documentation
+## Documentation Index
 
-Additional product and engineering references:
+Project references and related files:
 
-- `docs/PRD.md`
-- `docs/TECHNICAL_DESIGN.md`
+- [Chinese README](README.zh-CN.md)
+- [Product Requirements](docs/PRD.md)
+- [Technical Design](docs/TECHNICAL_DESIGN.md)
+- [Changelog](CHANGELOG.md)
+- [License](LICENSE)
+- [Package Manifest](package.json)
+- [Electron Builder Config](electron-builder.yml)
 
 ## License
 
-This project is licensed under the MIT License. See `LICENSE`.
+This project is licensed under the MIT License. See [LICENSE](LICENSE).
 
 ## Credits
 
