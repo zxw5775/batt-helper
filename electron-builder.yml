@@ -1,0 +1,17 @@
+appId: cc.zxw.batt-helper
+productName: Batt Helper
+directories:
+  output: dist
+files:
+  - out/**/*
+  - package.json
+  - resources/**/*
+  - build/icon.png
+mac:
+  category: public.app-category.utilities
+  icon: build/icon.icns
+  target:
+    - dmg
+    - zip
+  artifactName: '${productName}-${version}-${arch}.${ext}'
+asar: true
